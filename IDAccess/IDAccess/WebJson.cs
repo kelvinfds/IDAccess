@@ -73,22 +73,17 @@ namespace IDAccess
             var relacionamentoSerializado = SerializaDados(new UsuariosAdmin(id_Usuario, role), "user_roles");
             return Send("http://" + uri + "/create_objects", relacionamentoSerializado, false, chaveSessao);
         }
-
-            //Relaciona grupos com regras
             static public string GruposeRegras(string uri,long id_Grupo,long id_Regra, string chaveSessao)
         {
             var relacionamentoSerializado = SerializaDados(new GruposeRegras(id_Grupo, id_Regra), "group_access_rules");
             return Send("http://" + uri + "/create_objects", relacionamentoSerializado, false, chaveSessao);
         }
-
-        //Relaciona regras com horários
         static public string RegraseHorarios(string uri, long id_Regra, long id_Horario , string chaveSessao)
         {
             var relacionamentoSerializado = SerializaDados(new RegraseHorarios(id_Regra, id_Horario), "access_rule_time_zones");
             return Send("http://" + uri + "/create_objects", relacionamentoSerializado, false, chaveSessao);
         }
 
-        //Relaciona usuarios com grupos
         static public string UsuarioseGrupos(string uri, long id_Usuario, long id_Grupo, string chaveSessao)
         {
             var relacionamentoSerializado = SerializaDados(new UsuarioseGrupos(id_Usuario, id_Grupo), "user_groups");
@@ -181,8 +176,7 @@ namespace IDAccess
                 return e.Message;
             }
         }
-
-        //Função de biometra, NÃO está funcionando. utilizei a API do IDClass para criar essa função.        
+      
         static public string EnviarHorarioVerao(string uri, DateTime inicio, DateTime fim, string chaveSessao)
         {                
             var dataInicio = new start_date_time()
@@ -304,9 +298,7 @@ namespace IDAccess
                 }
             }
         }
-
-        // Rotina com parser Json de saída (a entrada ' ' poderia ter a mesma logica, mas para não complicar muito vou fazer apenas a saida)
-        // Veja como seria a rotina completa neste outro exemplo: https://github.com/controlid/RepCid/blob/master/test-CS-Futronic/RestJSON.cs
+        
         static public T Send<T>(string uri, object dados, bool serializar = true, string session = null)
         {
             var dadosSerializados = (serializar) ? JsonConvert.SerializeObject(dados) : dados;
@@ -333,7 +325,6 @@ namespace IDAccess
                     if (retornoLido.Contains("templates"))
                     {
                         var t = deserializerTemplate.JsonHelper.DeSerializar<T>(retornoLido);
-                        //templates t = new JavaScriptSerializer().Deserialize<templates>(retornoLido);
                         return t;
                     }
 
